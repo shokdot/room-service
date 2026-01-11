@@ -1,15 +1,10 @@
-import { AppError } from "@core/utils/AppError.js";
 import { Room } from "src/types/room.types.js";
 import { v4 as uuid } from 'uuid';
 
 class RoomManager {
     private rooms = new Map<string, Room>();
 
-    public createRoom(createdBy: string, winScore?: number): Room {
-        const roomId = uuid();
-
-        if (winScore && (winScore < 1 || winScore > 30))
-            throw new AppError('INVALID_WIN_SCORE');
+    public createRoom(roomId: string, createdBy: string, winScore?: number): Room {
 
         const room: Room = {
             id: roomId,
