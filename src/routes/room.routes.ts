@@ -1,12 +1,15 @@
 import { FastifyInstance } from 'fastify';
-import { createRoomHandler, getRoomsHandler } from '@controllers/index.js';
 import authenticate from '@core/middlewares/authenticate.middleware.js';
+import {
+    createRoomHandler,
+    getRoomsHandler,
+    deleteRoomHandler
+} from '@controllers/index.js';
 
 const roomRoutes = async (app: FastifyInstance): Promise<void> => {
     app.get('/', { preHandler: authenticate as any }, getRoomsHandler as any);
     app.post('/', { preHandler: authenticate as any }, createRoomHandler as any);
-    // app.delete('/:roomId', { preHandler: authenticate as any }, deleteRoomHandler as any);
-
+    app.delete('/:roomId', { preHandler: authenticate as any }, deleteRoomHandler as any);
 }
 
 export default roomRoutes;
