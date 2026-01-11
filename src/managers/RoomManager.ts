@@ -8,7 +8,7 @@ class RoomManager {
     public createRoom(createdBy: string, winScore?: number): Room {
         const roomId = uuid();
 
-        if (winScore && winScore > 30)
+        if (winScore && (winScore < 1 || winScore > 30))
             throw new AppError('INVALID_WIN_SCORE');
 
         const room: Room = {
