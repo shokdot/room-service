@@ -6,7 +6,8 @@ const envSchema = z.object({
 	SERVICE_TOKEN: z.string(),
 	JWT_SECRET: z.string().min(1, "JWT_SECRET is required"),
 	JWT_REFRESH_SECRET: z.string().min(1, "JWT_REFRESH_SECRET is required"),
-	JWT_TWO_FA: z.string().min(1, "JWT_TWO_FA is required")
+	JWT_TWO_FA: z.string().min(1, "JWT_TWO_FA is required"),
+	GAME_SERVICE_URL: z.string("GAME_SERVICE_URL is required")
 });
 
 const env = envSchema.parse(process.env);
@@ -18,3 +19,4 @@ export const JWT_SECRET = env.JWT_SECRET;
 export const JWT_REFRESH_SECRET = env.JWT_REFRESH_SECRET;
 export const JWT_TWO_FA = env.JWT_TWO_FA;
 export const SERVICE_NAME = 'ROOM_SERVICE';
+export const GAME_SERVICE_URL = env.GAME_SERVICE_URL;

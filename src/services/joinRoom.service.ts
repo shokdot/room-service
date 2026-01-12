@@ -1,0 +1,38 @@
+import { AppError } from "@core/utils/AppError.js";
+import { roomManager } from "src/managers/RoomManager.js";
+import { GAME_SERVICE_URL, SERVICE_TOKEN } from 'src/utils/env.js';
+import axios from "axios";
+
+const joinRoom = async (roomId: string, userId: string) => {
+
+    const room = roomManager.getRoom(roomId);
+    if (!room) throw new AppError('ROOM_NOT_FOUND');
+
+    const added = roomManager.addPlayerToRoom(roomId, userId);
+
+    if (!added) {
+        if (room.players.length >= 2) throw new AppError('ROOM_FULL');
+        if (room.players.includes(userId)) throw new AppError('ALREADY_IN_ROOM');
+        if (room.status !== 'waiting') throw new AppError('ROOM_NOT_WAITING');
+        throw new AppError('JOIN_ROOM_FAILED');
+    }
+
+    if (room.players.length === 2) {
+        try {
+            await axios.post(`${GAME_SERVICE_URL}`, {
+                roomId: room.id,
+                winScore: room.winScore
+            }, {
+                headers: {
+                    'x-service-token': SERVICE_TOKEN
+                }
+            });
+        } catch (error: any) {
+            roomManager.removePlayerFromRoom(roomId, userId);
+            throw new AppError('GAME_CREATION_FAILED');
+        }
+    }
+
+}
+
+export default joinRoom;

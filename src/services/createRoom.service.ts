@@ -7,10 +7,7 @@ const createRoom = (userId: string, winScore?: number) => {
     if (winScore && (winScore < 1 || winScore > 30))
         throw new AppError('INVALID_WIN_SCORE');
 
-    let roomId = uuid();
-
-    if (roomManager.getRoom(roomId))
-        roomId = uuid();
+    const roomId = uuid();
 
     const room = roomManager.createRoom(roomId, userId, winScore);
     return room;

@@ -1,9 +1,10 @@
 import { FastifyReply } from 'fastify';
 import { AuthRequest } from "@core/types/authRequest.js";
 import { getRooms } from "@services/index.js";
-import sendError from "@core/utils/sendError.js";
+import { GetRoomsQueryDTO } from 'src/dto/get-rooms.dto.js';
+import { sendError } from "@core/index.js";
 
-const getRoomsHandler = (request: AuthRequest<undefined, { available?: string }>, reply: FastifyReply) => {
+const getRoomsHandler = (request: AuthRequest<undefined, GetRoomsQueryDTO>, reply: FastifyReply) => {
     try {
         const { available } = request.query;
 

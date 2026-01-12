@@ -1,13 +1,14 @@
 import { AuthRequest } from "@core/types/authRequest.js";
 import { FastifyReply } from "fastify";
 import { createRoom } from "@services/index.js";
-import sendError from "@core/utils/sendError.js";
 import { CreateRoomDTO } from "src/dto/create-room.dto.js";
+import { sendError } from "@core/index.js";
 
 const createRoomHandler = async (request: AuthRequest<CreateRoomDTO>, reply: FastifyReply) => {
     try {
         const { userId } = request;
-        const { winScore } = request.body;
+        const { winScore } = request.body ?? {};
+
         const room = createRoom(userId, winScore);
 
         return reply.status(201).send({

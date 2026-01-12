@@ -1,9 +1,10 @@
 import { AuthRequest } from "@core/types/authRequest.js";
 import { FastifyReply } from "fastify";
-import sendError from "@core/utils/sendError.js";
 import { deleteRoom } from "@services/index.js";
+import { sendError } from "@core/index.js";
+import { RoomByIdDTO } from "src/dto/room-id.dto.js";
 
-const deleteRoomHandler = (request: AuthRequest<undefined, undefined, { roomId: string }>, reply: FastifyReply) => {
+const deleteRoomHandler = (request: AuthRequest<undefined, undefined, RoomByIdDTO>, reply: FastifyReply) => {
     try {
         const { roomId } = request.params;
 

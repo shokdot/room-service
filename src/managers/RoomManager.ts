@@ -1,5 +1,4 @@
 import { Room } from "src/types/room.types.js";
-import { v4 as uuid } from 'uuid';
 
 class RoomManager {
     private rooms = new Map<string, Room>();
