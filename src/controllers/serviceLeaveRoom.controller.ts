@@ -9,13 +9,10 @@ const serviceLeaveRoomHandler = async (request: FastifyRequest<{ Params: RoomByI
         const { roomId } = request.params;
         const { userId } = request.body;
 
-        const isRoomDeleted = leaveRoom(roomId, userId);
+        leaveRoom(roomId, userId);
 
         return reply.status(200).send({
             status: 'success',
-            data: {
-                isRoomDeleted
-            },
             message: 'Successfully removed player from room'
         });
 

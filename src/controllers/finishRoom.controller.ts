@@ -6,11 +6,10 @@ import { RoomByIdDTO } from 'src/dto/room-id.dto.js';
 const finishRoomHandler = async (request: FastifyRequest<{ Params: RoomByIdDTO }>, reply: FastifyReply) => {
     try {
         const { roomId } = request.params;
-        const data = finishRoom(roomId);
+        finishRoom(roomId);
 
         return reply.status(200).send({
             status: 'success',
-            data,
             message: 'Room finished'
         });
 

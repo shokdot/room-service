@@ -9,9 +9,7 @@ const leaveRoom = (roomId: string, userId: string) => {
         throw new AppError('PLAYER_NOT_FOUND_IN_ROOM');
     }
 
-    const roomDeleted = roomManager.removePlayerFromRoom(roomId, userId);
-
-    return roomDeleted;
+    roomManager.removePlayerFromRoom(roomId, userId);
 }
 
 export default leaveRoom;

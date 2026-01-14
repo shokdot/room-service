@@ -8,7 +8,6 @@ const finishRoom = (roomId: string) => {
     roomManager.updateRoomStatus(roomId, 'finished');
     roomManager.deleteRoom(roomId);
     // stats service logic or in Game Service
-    return { isRoomDeleted: true }
 }
 
 export default finishRoom;
