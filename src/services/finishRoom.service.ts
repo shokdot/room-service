@@ -6,7 +6,9 @@ const finishRoom = (roomId: string) => {
     if (!room) throw new AppError('ROOM_NOT_FOUND');
 
     roomManager.updateRoomStatus(roomId, 'finished');
-    return { roomId, status: 'finished' };
+    roomManager.deleteRoom(roomId);
+    // stats service logic or in Game Service
+    return { isRoomDeleted: true }
 }
 
 export default finishRoom;
