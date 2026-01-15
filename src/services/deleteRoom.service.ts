@@ -1,5 +1,6 @@
 import { AppError } from '@core/utils/AppError.js';
 import { roomManager } from 'src/managers/RoomManager.js'
+import { broadcastRoomUpdate } from './broadcastRoomUpdate.service.js';
 
 const deleteRoom = (roomId: string, userId: string) => {
 
@@ -17,6 +18,7 @@ const deleteRoom = (roomId: string, userId: string) => {
     }
 
     roomManager.deleteRoom(roomId);
+    broadcastRoomUpdate('ROOM_DELETED', roomId);
 };
 
 export default deleteRoom;

@@ -1,6 +1,7 @@
 import { AppError } from "@core/utils/AppError.js";
 import { roomManager } from "src/managers/RoomManager.js";
 import { v4 as uuid } from 'uuid';
+import { broadcastRoomUpdate } from "./broadcastRoomUpdate.service.js";
 
 const createRoom = (userId: string, winScore?: number) => {
 
@@ -10,6 +11,9 @@ const createRoom = (userId: string, winScore?: number) => {
     const roomId = uuid();
 
     const room = roomManager.createRoom(roomId, userId, winScore);
+
+    broadcastRoomUpdate('ROOM_CREATED', roomId, room);
+
     return room;
 }
 

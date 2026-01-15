@@ -2,6 +2,7 @@ import { AppError } from "@core/utils/AppError.js";
 import { roomManager } from "src/managers/RoomManager.js";
 import { GAME_SERVICE_URL, SERVICE_TOKEN } from 'src/utils/env.js';
 import axios from "axios";
+import { broadcastRoomUpdate } from "./broadcastRoomUpdate.service.js";
 
 const joinRoom = async (roomId: string, userId: string) => {
 
@@ -27,10 +28,14 @@ const joinRoom = async (roomId: string, userId: string) => {
                     'x-service-token': SERVICE_TOKEN
                 }
             });
+            broadcastRoomUpdate('ROOM_UPDATED', roomId, room);
         } catch (error: any) {
             roomManager.removePlayerFromRoom(roomId, userId);
+            broadcastRoomUpdate('ROOM_UPDATED', roomId, room);
             throw new AppError('GAME_CREATION_FAILED');
         }
+    } else {
+        broadcastRoomUpdate('ROOM_UPDATED', roomId, room);
     }
 
 }
