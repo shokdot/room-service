@@ -2,7 +2,7 @@ import 'dotenv/config'
 import { buildApp, startServer, API_PREFIX } from '@core/index.js';
 import { PORT, HOST, SERVICE_NAME } from './utils/env.js';
 import healthRoutes from '@core/routes/health.routes.js';
-import roomRoutes from 'src/routes/room.routes.js';
+import roomRoutes from 'src/routes/index.js';
 
 const app = buildApp(SERVICE_NAME);
 type AppInstance = typeof app;

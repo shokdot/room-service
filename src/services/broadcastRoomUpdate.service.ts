@@ -3,7 +3,7 @@ import { NOTIFICATION_SERVICE_URL, SERVICE_TOKEN } from "src/utils/env.js";
 
 export const broadcastRoomUpdate = async (type: 'ROOM_CREATED' | 'ROOM_DELETED' | 'ROOM_UPDATED', roomId: string, data?: any) => {
     try {
-        await axios.post(`${NOTIFICATION_SERVICE_URL}/broadcast`, {
+        await axios.post(`${NOTIFICATION_SERVICE_URL}/internal/broadcast`, {
             type,
             message: {
                 roomId,

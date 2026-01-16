@@ -20,7 +20,7 @@ const joinRoom = async (roomId: string, userId: string) => {
 
     if (room.players.length === 2) {
         try {
-            await axios.post(`${GAME_SERVICE_URL}`, {
+            await axios.post(`${GAME_SERVICE_URL}/internal/`, {
                 roomId: room.id,
                 winScore: room.winScore
             }, {

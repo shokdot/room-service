@@ -4,7 +4,7 @@ import leaveRoom from '@services/leaveRoom.service.js';
 import { RoomByIdDTO } from 'src/dto/room-id.dto.js';
 import { UserIdDTO } from 'src/dto/user-id.dto.js';
 
-const serviceLeaveRoomHandler = async (request: FastifyRequest<{ Params: RoomByIdDTO, Body: UserIdDTO }>, reply: FastifyReply) => {
+const leaveRoomHandler = async (request: FastifyRequest<{ Params: RoomByIdDTO, Body: UserIdDTO }>, reply: FastifyReply) => {
     try {
         const { roomId } = request.params;
         const { userId } = request.body;
@@ -28,4 +28,4 @@ const serviceLeaveRoomHandler = async (request: FastifyRequest<{ Params: RoomByI
     }
 }
 
-export default serviceLeaveRoomHandler;
+export default leaveRoomHandler;
