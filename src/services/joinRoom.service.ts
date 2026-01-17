@@ -22,6 +22,7 @@ const joinRoom = async (roomId: string, userId: string) => {
         try {
             await axios.post(`${GAME_SERVICE_URL}/internal/`, {
                 roomId: room.id,
+                userIds: room.players,
                 winScore: room.winScore
             }, {
                 headers: {
