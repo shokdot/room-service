@@ -1,0 +1,28 @@
+FROM node:20
+
+WORKDIR /apps
+
+COPY core/package*.json core/
+COPY core/tsconfig.json core/
+
+COPY room-service/package*.json room-service/
+COPY room-service/tsconfig.json room-service/
+
+WORKDIR /apps/core
+RUN npm install
+
+WORKDIR /apps/room-service
+RUN npm install
+
+WORKDIR /apps
+COPY core/src core/src
+COPY room-service/src room-service/src
+
+WORKDIR /apps/core
+RUN npm run build
+
+WORKDIR /apps/room-service
+
+EXPOSE 3000
+
+CMD ["npm", "run", "dev"]
