@@ -1,9 +1,25 @@
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
-	entry: ['src/server.ts'],
-	format: ['esm'],
-	target: 'es2022',
-	outDir: 'dist',
-	external: ['prom-client', 'fastify-metrics', 'axios', 'form-data', 'combined-stream'],
+    entry: ['src/server.ts'],
+    format: ['esm'],
+    target: 'es2022',
+    outDir: 'dist',
+    external: [
+        'fastify-metrics',
+        'pino',
+        'fastify',
+        '@fastify/cookie',
+        '@fastify/cors',
+        '@fastify/helmet',
+        '@fastify/rate-limit',
+        '@fastify/swagger',
+        '@fastify/swagger-ui',
+        '@prisma/client',
+        'axios',
+        'dotenv',
+        'jsonwebtoken',
+        'zod'
+    ],
+    noExternal: ['@core'],
 });
