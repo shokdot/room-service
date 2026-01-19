@@ -12,4 +12,4 @@ async function registerRoutes(app: AppInstance) {
 	await app.register(roomRoutes as any, { prefix: `${API_PREFIX}/rooms` })
 }
 
-startServer(app, registerRoutes, HOST, PORT);
+startServer(app, registerRoutes, HOST, PORT, SERVICE_NAME);
