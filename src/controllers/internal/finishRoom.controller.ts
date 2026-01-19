@@ -2,11 +2,14 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { sendError } from '@core/index.js';
 import finishRoom from '@services/finishRoom.service.js';
 import { RoomByIdDTO } from 'src/dto/room-id.dto.js';
+import { GameResultDTO } from 'src/dto/game-result.dto.js';
 
-const finishRoomHandler = async (request: FastifyRequest<{ Params: RoomByIdDTO }>, reply: FastifyReply) => {
+const finishRoomHandler = async (request: FastifyRequest<{ Params: RoomByIdDTO, Body: GameResultDTO }>, reply: FastifyReply) => {
     try {
         const { roomId } = request.params;
-        finishRoom(roomId);
+        const result = request.body;
+
+        finishRoom(roomId, result);
 
         return reply.status(200).send({
             status: 'success',
