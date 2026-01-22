@@ -1,7 +1,7 @@
 import { FastifyReply } from "fastify";
 import { createRoom } from "@services/index.js";
 import { CreateRoomDTO } from "src/dto/create-room.dto.js";
-import { sendError, AuthRequest } from "@core/index.js";
+import { sendError, AuthRequest, AppError } from "@core/index.js";
 
 const createRoomHandler = async (request: AuthRequest<CreateRoomDTO>, reply: FastifyReply) => {
 	try {
@@ -17,12 +17,10 @@ const createRoomHandler = async (request: AuthRequest<CreateRoomDTO>, reply: Fas
 		});
 
 	} catch (error: any) {
-		switch (error.code) {
-			case 'INVALID_WIN_SCORE':
-				return sendError(reply as any, 400, error.code, 'Invalid win score');
-			default:
-				return sendError(reply as any, 500, 'INTERNAL_SERVER_ERROR', 'Internal server error');
+		if (error instanceof AppError) {
+			return sendError(reply, error);
 		}
+		return sendError(reply, 500, 'INTERNAL_SERVER_ERROR', 'Internal server error');
 	}
 }
 

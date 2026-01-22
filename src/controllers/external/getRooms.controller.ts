@@ -1,7 +1,7 @@
 import { FastifyReply } from 'fastify';
 import { getRooms } from "@services/index.js";
 import { GetRoomsQueryDTO } from 'src/dto/get-rooms.dto.js';
-import { sendError, AuthRequest } from "@core/index.js";
+import { sendError, AuthRequest, AppError } from "@core/index.js";
 
 const getRoomsHandler = (request: AuthRequest<undefined, GetRoomsQueryDTO>, reply: FastifyReply) => {
 	try {
@@ -16,7 +16,10 @@ const getRoomsHandler = (request: AuthRequest<undefined, GetRoomsQueryDTO>, repl
 		});
 
 	} catch (error: any) {
-		return sendError(reply as any, 500, 'INTERNAL_SERVER_ERROR', 'Internal server error');
+		if (error instanceof AppError) {
+			return sendError(reply, error);
+		}
+		return sendError(reply, 500, 'INTERNAL_SERVER_ERROR', 'Internal server error');
 	}
 }
 

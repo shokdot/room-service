@@ -1,7 +1,7 @@
 import { FastifyReply } from 'fastify';
 import { RoomByIdDTO } from 'src/dto/room-id.dto.js';
 import { leaveRoom } from '@services/index.js';
-import { sendError, AuthRequest } from '@core/index.js';
+import { sendError, AuthRequest, AppError } from '@core/index.js';
 
 const leaveRoomHandler = async (request: AuthRequest<undefined, undefined, RoomByIdDTO>, reply: FastifyReply) => {
 	try {
@@ -17,14 +17,10 @@ const leaveRoomHandler = async (request: AuthRequest<undefined, undefined, RoomB
 		});
 
 	} catch (error: any) {
-		switch (error.code) {
-			case 'ROOM_NOT_FOUND':
-				return sendError(reply as any, 404, error.code, 'Room not found');
-			case 'PLAYER_NOT_FOUND_IN_ROOM':
-				return sendError(reply as any, 404, error.code, 'Player not found in room');
-			default:
-				return sendError(reply as any, 500, 'INTERNAL_SERVER_ERROR', 'Internal server error');
+		if (error instanceof AppError) {
+			return sendError(reply, error);
 		}
+		return sendError(reply, 500, 'INTERNAL_SERVER_ERROR', 'Internal server error');
 	}
 }
 
