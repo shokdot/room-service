@@ -1,4 +1,4 @@
-import { AppError } from "@core/utils/AppError.js";
+import { AppError } from "@core/index.js";
 import { roomManager } from "src/managers/RoomManager.js";
 import { GAME_SERVICE_URL, SERVICE_TOKEN } from 'src/utils/env.js';
 import axios from "axios";

@@ -1,4 +1,4 @@
-import { AppError } from "@core/utils/AppError.js";
+import { AppError } from "@core/index.js";
 import { roomManager } from "src/managers/RoomManager.js";
 import { v4 as uuid } from 'uuid';
 import { broadcastRoomUpdate } from "./broadcastRoomUpdate.service.js";

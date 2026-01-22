@@ -1,5 +1,5 @@
 import { roomManager } from "src/managers/RoomManager.js";
-import { AppError } from "@core/utils/AppError.js";
+import { AppError } from "@core/index.js";
 import { broadcastRoomUpdate } from "./broadcastRoomUpdate.service.js";
 
 import { GameResultDTO } from "src/dto/game-result.dto.js";
