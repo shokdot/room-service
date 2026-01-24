@@ -1,0 +1,40 @@
+import { RouteShorthandOptions } from "fastify";
+import { errorResponseSchema } from "@core/index.js";
+
+const leaveRoomSchema: RouteShorthandOptions = {
+	schema:
+	{
+		description: "Leave a room",
+		tags: ["Room"],
+		security: [{ bearerAuth: [] }],
+		params: {
+			type: 'object',
+			required: ['roomId'],
+			additionalProperties: false,
+			properties: {
+				roomId: {
+					type: 'string',
+					description: 'Room ID to leave'
+				}
+			}
+		},
+		response: {
+			200: {
+				type: 'object',
+				required: ['status', 'message'],
+				additionalProperties: false,
+				properties: {
+					status: { type: 'string', enum: ['success'] },
+					message: { type: 'string' }
+				},
+			},
+			400: errorResponseSchema,
+			401: errorResponseSchema,
+			403: errorResponseSchema,
+			404: errorResponseSchema,
+			500: errorResponseSchema
+		},
+	},
+};
+
+export default leaveRoomSchema;
