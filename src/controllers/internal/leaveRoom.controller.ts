@@ -9,7 +9,7 @@ const leaveRoomHandler = async (request: FastifyRequest<{ Params: RoomByIdDTO, B
 		const { roomId } = request.params;
 		const { userId } = request.body;
 
-		leaveRoom(roomId, userId);
+		await leaveRoom(roomId, userId);
 
 		return reply.status(200).send({
 			status: 'success',

@@ -3,11 +3,11 @@ import { deleteRoom } from "@services/index.js";
 import { RoomByIdDTO } from "src/dto/room-id.dto.js";
 import { sendError, AuthRequest, AppError } from "@core/index.js";
 
-const deleteRoomHandler = (request: AuthRequest<undefined, undefined, RoomByIdDTO>, reply: FastifyReply) => {
+const deleteRoomHandler = async (request: AuthRequest<undefined, undefined, RoomByIdDTO>, reply: FastifyReply) => {
 	try {
 		const { roomId } = request.params;
 
-		deleteRoom(roomId, request.userId);
+		await deleteRoom(roomId, request.userId);
 
 		return reply.status(200).send({
 			status: 'success',

@@ -9,7 +9,7 @@ const finishRoomHandler = async (request: FastifyRequest<{ Params: RoomByIdDTO, 
 		const { roomId } = request.params;
 		const result = request.body;
 
-		finishRoom(roomId, result);
+		await finishRoom(roomId, result);
 
 		return reply.status(200).send({
 			status: 'success',

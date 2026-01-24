@@ -3,11 +3,11 @@ import { getRooms } from "@services/index.js";
 import { GetRoomsQueryDTO } from 'src/dto/get-rooms.dto.js';
 import { sendError, AuthRequest, AppError } from "@core/index.js";
 
-const getRoomsHandler = (request: AuthRequest<undefined, GetRoomsQueryDTO>, reply: FastifyReply) => {
+const getRoomsHandler = async (request: AuthRequest<undefined, GetRoomsQueryDTO>, reply: FastifyReply) => {
 	try {
 		const { available } = request.query;
 
-		const rooms = getRooms(available === 'true');
+		const rooms = await getRooms(available === 'true');
 
 		return reply.status(200).send({
 			status: 'success',

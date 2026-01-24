@@ -8,7 +8,7 @@ import {
 	leaveRoomHandler
 } from '@controllers/external/index.js';
 
-const internalRoutes = async (app: FastifyInstance): Promise<void> => {
+const externalRoutes = async (app: FastifyInstance): Promise<void> => {
 	app.get('/', { preHandler: authenticate as any }, getRoomsHandler as any); // Schema
 	app.post('/', { preHandler: authenticate as any }, createRoomHandler as any); // Schema
 	app.delete('/:roomId', { preHandler: authenticate as any }, deleteRoomHandler as any); // Schema
@@ -16,4 +16,4 @@ const internalRoutes = async (app: FastifyInstance): Promise<void> => {
 	app.post('/:roomId/leave', { preHandler: authenticate as any }, leaveRoomHandler as any); // Schema
 }
 
-export default internalRoutes;
+export default externalRoutes;

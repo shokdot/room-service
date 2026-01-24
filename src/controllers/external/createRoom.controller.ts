@@ -8,7 +8,7 @@ const createRoomHandler = async (request: AuthRequest<CreateRoomDTO>, reply: Fas
 		const { userId } = request;
 		const { winScore } = request.body ?? {};
 
-		const room = createRoom(userId, winScore);
+		const room = await createRoom(userId, winScore);
 
 		return reply.status(201).send({
 			status: 'success',

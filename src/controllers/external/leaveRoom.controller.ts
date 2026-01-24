@@ -8,11 +8,10 @@ const leaveRoomHandler = async (request: AuthRequest<undefined, undefined, RoomB
 		const { roomId } = request.params;
 		const { userId } = request;
 
-		const roomDeleted = leaveRoom(roomId, userId);
+		await leaveRoom(roomId, userId);
 
 		return reply.status(200).send({
 			status: 'success',
-			data: { roomDeleted },
 			message: 'Successfully left room'
 		});
 
