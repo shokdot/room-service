@@ -81,6 +81,11 @@ class RoomManager {
 				room.players.length < 2
 			);
 	}
+
+	public getRoomByUserId(userId: string): Room | undefined {
+		return Array.from(this.rooms.values())
+			.find(room => room.players.includes(userId));
+	}
 }
 
 export const roomManager = new RoomManager();

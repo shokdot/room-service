@@ -8,6 +8,12 @@ const createRoom = async (userId: string, winScore?: number) => {
 	if (winScore && (winScore < 1 || winScore > 30))
 		throw new AppError('INVALID_WIN_SCORE');
 
+	// Check if user already has a room
+	const existingRoom = roomManager.getRoomByUserId(userId);
+	if (existingRoom) {
+		throw new AppError('ALREADY_IN_ROOM');
+	}
+
 	const roomId = uuid();
 
 	const room = roomManager.createRoom(roomId, userId, winScore);

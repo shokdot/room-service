@@ -16,6 +16,6 @@ export const broadcastRoomUpdate = async (type: 'ROOM_CREATED' | 'ROOM_DELETED' 
 			}
 		});
 	} catch (error) {
-		throw new AppError('FAILED_TO_BROADCAST_ROOM_UPDATE');
+		console.error('Failed to broadcast room update:', error.request);
 	}
 };

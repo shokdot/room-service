@@ -1,6 +1,5 @@
 import { RouteShorthandOptions } from "fastify";
-import { errorResponseSchema } from "@core/index.js";
-import { authenticate } from "@core/index.js";
+import { authenticate, errorResponseSchema } from "@core/index.js";
 
 const getRoomsSchema: RouteShorthandOptions = {
 	preHandler: [authenticate as any],
