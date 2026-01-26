@@ -12,7 +12,12 @@ const createRoom = async (userId: string, winScore?: number) => {
 
 	const room = roomManager.createRoom(roomId, userId, winScore);
 
-	broadcastRoomUpdate('ROOM_CREATED', roomId, room);
+	try {
+		await broadcastRoomUpdate('ROOM_CREATED', roomId, room);
+	} catch (error) {
+		// Log error but don't fail room creation since room was already created
+		console.error('Failed to broadcast room update:', error);
+	}
 
 	return room;
 }

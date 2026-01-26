@@ -1,7 +1,9 @@
 import { RouteShorthandOptions } from "fastify";
 import { errorResponseSchema } from "@core/index.js";
+import { authenticate } from "@core/index.js";
 
 const createRoomSchema: RouteShorthandOptions = {
+	preHandler: [authenticate as any],
 	schema:
 	{
 		description: "Create a new game room",
