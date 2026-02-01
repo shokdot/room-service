@@ -8,6 +8,7 @@ const envSchema = z.object({
 	JWT_REFRESH_SECRET: z.string().min(1, "JWT_REFRESH_SECRET is required"),
 	JWT_TWO_FA: z.string().min(1, "JWT_TWO_FA is required"),
 	GAME_SERVICE_URL: z.url("GAME_SERVICE_URL must be a valid URL"),
+	CHAT_SERVICE_URL: z.url("CHAT_SERVICE_URL must be a valid URL"),
 	NOTIFICATION_SERVICE_URL: z.url("NOTIFICATION_SERVICE_URL must be a valid URL"),
 	STATS_SERVICE_URL: z.url("STATS_SERVICE_URL must be a valid URL")
 });
@@ -22,5 +23,6 @@ export const JWT_REFRESH_SECRET = env.JWT_REFRESH_SECRET;
 export const JWT_TWO_FA = env.JWT_TWO_FA;
 export const SERVICE_NAME = 'ROOM_SERVICE';
 export const GAME_SERVICE_URL = env.GAME_SERVICE_URL;
+export const CHAT_SERVICE_URL = env.CHAT_SERVICE_URL;
 export const NOTIFICATION_SERVICE_URL = env.NOTIFICATION_SERVICE_URL;
 export const STATS_SERVICE_URL = env.STATS_SERVICE_URL;

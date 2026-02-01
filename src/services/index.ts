@@ -4,3 +4,6 @@ export { default as deleteRoom } from './deleteRoom.service.js';
 export { default as joinRoom } from './joinRoom.service.js';
 export { default as leaveRoom } from './leaveRoom.service.js';
 export { default as finishRoom } from './finishRoom.service.js';
+export { default as createInvitation } from './createInvitation.service.js';
+export { default as acceptInvitation } from './acceptInvitation.service.js';
+export { default as declineInvitation } from './declineInvitation.service.js';

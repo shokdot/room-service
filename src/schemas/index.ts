@@ -6,6 +6,9 @@ import joinRoomSchema from "./external/joinRoom.schema.js";
 import leaveRoomSchemaExternal from "./external/leaveRoom.schema.js";
 import leaveRoomSchemaInternal from "./internal/leaveRoom.schema.js";
 import finishRoomSchema from "./internal/finishRoom.schema.js";
+import createInvitationSchema from "./invitation/createInvitation.schema.js";
+import acceptInvitationSchema from "./invitation/acceptInvitation.schema.js";
+import declineInvitationSchema from "./invitation/declineInvitation.schema.js";
 
 export const internal = {
 	createRoom: createRoomSchema,
@@ -14,12 +17,19 @@ export const internal = {
 	joinRoom: joinRoomSchema,
 	leaveRoom: leaveRoomSchemaInternal,
 	finishRoom: finishRoomSchema
-}
+};
 
 export const external = {
 	createRoom: createRoomSchema,
 	getRooms: getRoomsSchema,
 	deleteRoom: deleteRoomSchema,
 	joinRoom: joinRoomSchema,
-	leaveRoom: leaveRoomSchemaExternal
-}
+	leaveRoom: leaveRoomSchemaExternal,
+};
+
+
+export const invitation = {
+	createInvitation: createInvitationSchema,
+	acceptInvitation: acceptInvitationSchema,
+	declineInvitation: declineInvitationSchema
+};
