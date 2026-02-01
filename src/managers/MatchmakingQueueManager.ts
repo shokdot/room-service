@@ -42,6 +42,18 @@ class MatchmakingQueueManager {
 		}
 	}
 
+	/** Re-queue users after a failed match and set new timeouts so they can time out. */
+	private requeueWithTimeouts(user1: string, user2: string): void {
+		this.queue.unshift(user2);
+		this.queue.unshift(user1);
+		for (const userId of [user1, user2]) {
+			this.timeouts.set(
+				userId,
+				setTimeout(() => this.handleTimeout(userId), MATCH_FOUND_TIMEOUT_MS)
+			);
+		}
+	}
+
 	private handleTimeout(userId: string): void {
 		this.timeouts.delete(userId);
 		if (!this.queue.includes(userId)) return;
@@ -67,15 +79,13 @@ class MatchmakingQueueManager {
 
 		if (!added) {
 			roomManager.deleteRoom(roomId);
-			this.queue.unshift(user2);
-			this.queue.unshift(user1);
+			this.requeueWithTimeouts(user1, user2);
 			return { matched: false };
 		}
 
 		const room = roomManager.getRoom(roomId);
 		if (!room) {
-			this.queue.unshift(user2);
-			this.queue.unshift(user1);
+			this.requeueWithTimeouts(user1, user2);
 			return { matched: false };
 		}
 
@@ -97,8 +107,7 @@ class MatchmakingQueueManager {
 		} catch {
 			roomManager.removePlayerFromRoom(roomId, user2);
 			roomManager.deleteRoom(roomId);
-			this.queue.unshift(user2);
-			this.queue.unshift(user1);
+			this.requeueWithTimeouts(user1, user2);
 			throw new Error('GAME_CREATION_FAILED');
 		}
 

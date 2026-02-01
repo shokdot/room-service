@@ -21,13 +21,13 @@ const finishRoomSchema: RouteShorthandOptions = {
 		},
 		body: {
 			type: 'object',
-			required: ['winner', 'finalScore', 'gameDuration', 'startTime', 'endTime', 'players'],
+			required: ['players'],
 			additionalProperties: false,
 			properties: {
 				winner: {
 					type: 'number',
 					enum: [0, 1],
-					description: 'Winner index (0 for player1, 1 for player2)'
+					description: 'Winner index (0 for player1, 1 for player2); omit when game ended without winner (e.g. player left)'
 				},
 				finalScore: {
 					type: 'object',
