@@ -9,6 +9,8 @@ import finishRoomSchema from "./internal/finishRoom.schema.js";
 import createInvitationSchema from "./invitation/createInvitation.schema.js";
 import acceptInvitationSchema from "./invitation/acceptInvitation.schema.js";
 import declineInvitationSchema from "./invitation/declineInvitation.schema.js";
+import enterQueueSchema from "./matchmaking/enterQueue.schema.js";
+import leaveQueueSchema from "./matchmaking/leaveQueue.schema.js";
 
 export const internal = {
 	createRoom: createRoomSchema,
@@ -32,4 +34,9 @@ export const invitation = {
 	createInvitation: createInvitationSchema,
 	acceptInvitation: acceptInvitationSchema,
 	declineInvitation: declineInvitationSchema
+};
+
+export const matchmaking = {
+	enterQueue: enterQueueSchema,
+	leaveQueue: leaveQueueSchema
 };

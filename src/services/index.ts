@@ -7,3 +7,5 @@ export { default as finishRoom } from './finishRoom.service.js';
 export { default as createInvitation } from './createInvitation.service.js';
 export { default as acceptInvitation } from './acceptInvitation.service.js';
 export { default as declineInvitation } from './declineInvitation.service.js';
+export { default as enterMatchmakingQueue } from './enterMatchmakingQueue.service.js';
+export { default as leaveMatchmakingQueue } from './leaveMatchmakingQueue.service.js';
