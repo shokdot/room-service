@@ -16,6 +16,10 @@ class MatchmakingQueueManager {
 	}
 
 	public async enter(userId: string): Promise<{ matched: boolean; roomId?: string }> {
+		// Prevent duplicate queue entries
+		if (this.queue.includes(userId)) {
+			return { matched: false };
+		}
 		this.clearTimeout(userId);
 		this.queue.push(userId);
 

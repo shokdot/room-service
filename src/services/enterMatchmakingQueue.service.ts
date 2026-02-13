@@ -1,11 +1,17 @@
 import { AppError } from '@core/index.js';
 import { roomManager } from 'src/managers/RoomManager.js';
 import { matchmakingQueueManager } from 'src/managers/MatchmakingQueueManager.js';
+import { broadcastRoomUpdate } from './broadcastRoomUpdate.service.js';
 
 const enterMatchmakingQueue = async (userId: string) => {
-	const inRoom = roomManager.getRoomByUserId(userId);
-	if (inRoom) {
-		throw new AppError('ALREADY_IN_ROOM');
+	const existingRoom = roomManager.getRoomByUserId(userId);
+	if (existingRoom) {
+		const wasLastPlayer = roomManager.removePlayerFromRoom(existingRoom.id, userId);
+		if (wasLastPlayer) {
+			broadcastRoomUpdate('ROOM_DELETED', existingRoom.id).catch(() => { });
+		} else {
+			broadcastRoomUpdate('ROOM_UPDATED', existingRoom.id, roomManager.getRoom(existingRoom.id)).catch(() => { });
+		}
 	}
 
 	if (matchmakingQueueManager.isInQueue(userId)) {
