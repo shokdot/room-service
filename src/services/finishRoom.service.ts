@@ -1,5 +1,5 @@
 import { roomManager } from "src/managers/RoomManager.js";
-import { AppError } from "@core/index.js";
+import { AppError, API_PREFIX } from "@core/index.js";
 import { broadcastRoomUpdate } from "./broadcastRoomUpdate.service.js";
 import { GameResultDTO } from "src/dto/game-result.dto.js";
 import { STATS_SERVICE_URL, SERVICE_TOKEN } from 'src/utils/env.js';
@@ -22,10 +22,10 @@ const finishRoom = async (roomId: string, result?: GameResultDTO) => {
 			}
 
 			// Determine winner ID (winner is 0 for player1, 1 for player2)
-			const winnerId = result!.winner === 0 
-				? playerA.userId 
-				: result!.winner === 1 
-					? playerB.userId 
+			const winnerId = result!.winner === 0
+				? playerA.userId
+				: result!.winner === 1
+					? playerB.userId
 					: null;
 
 			// Map scores (player1 is playerA, player2 is playerB)
@@ -35,8 +35,23 @@ const finishRoom = async (roomId: string, result?: GameResultDTO) => {
 			// Convert duration from milliseconds to seconds
 			const duration = Math.floor(result!.gameDuration / 1000);
 
-			// Call stats-service to record the match
-			await axios.post(`${STATS_SERVICE_URL}/internal/matches`, {
+			// Construct URL robustly: handle if STATS_SERVICE_URL already includes path or not
+			const baseUrl = STATS_SERVICE_URL.replace(/\/$/, ''); // Remove trailing slash
+			const statsPath = `${API_PREFIX}/stats`;
+			// If baseUrl doesn't end with /stats (or /stats/api/v1/stats etc), append the prefix
+			const url = baseUrl.includes('/stats')
+				? `${baseUrl}/internal/matches`
+				: `${baseUrl}${statsPath}/internal/matches`;
+
+			console.log(`[RoomService] Recording match to ${url}`, {
+				roomId,
+				winnerId,
+				scoreA,
+				scoreB,
+				duration
+			});
+
+			await axios.post(url, {
 				playerAId: playerA.userId,
 				playerBId: playerB.userId,
 				scoreA,
@@ -48,9 +63,13 @@ const finishRoom = async (roomId: string, result?: GameResultDTO) => {
 					'x-service-token': SERVICE_TOKEN
 				}
 			});
+			console.log(`[RoomService] Match recorded successfully`);
 		} catch (error: any) {
-			// Log error but don't fail the room finish operation
+			// Log detailed error
 			console.error(`[RoomService] Failed to record match in stats-service:`, error.message);
+			if (error.response) {
+				console.error(`[RoomService] Stats service response:`, error.response.status, error.response.data);
+			}
 		}
 	}
 
